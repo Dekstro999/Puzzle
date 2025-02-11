@@ -2,7 +2,7 @@ from observer import Observer
 
 class Observable:
     def __init__(self):
-        self._observers = []
+        self._observers : list[Observer]= []
 
     def add_observer(self, observer: Observer):
         self._observers.append(observer)

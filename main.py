@@ -1,16 +1,14 @@
-from Interface.Menu import Menu
-from Interface.Juego import Juego
+from Interface.menu import Menu
+from Interface.juego import Juego
 from History.Historial import Historial
 import customtkinter as ctk
-from customtkinter import CTkImage  
+from customtkinter import CTkImage
 import tkinter as tk
 from tkinter import messagebox
 import time
 import os
 from PIL import Image
 import threading
-from Observable import Observable
-from GameObserver import GameObserver
 
 class JuegoPuzzle(ctk.CTk):
     def __init__(self):

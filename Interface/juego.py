@@ -3,14 +3,14 @@ import customtkinter as ctk
 import tkinter as tk
 import random
 import time
-from Observable import Observable
-from GameObserver import GameObserver
+from observable import Observable
+from game_observer import GameObserver
 
 class Juego(Observable):
     def __init__(self, master):
+        super().__init__()
         self.master = master
         self.historial = Historial(master)
-        Observable.__init__(self)
         self.add_observer(GameObserver(self))
 
     def create_main_menu(self):
