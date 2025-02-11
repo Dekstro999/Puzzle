@@ -3,11 +3,15 @@ import customtkinter as ctk
 import tkinter as tk
 import random
 import time
+from Observable import Observable
+from GameObserver import GameObserver
 
-class Juego:
+class Juego(Observable):
     def __init__(self, master):
         self.master = master
         self.historial = Historial(master)
+        Observable.__init__(self)
+        self.add_observer(GameObserver(self))
 
     def create_main_menu(self):
         if not self.master.mezclando:
@@ -106,6 +110,7 @@ class Juego:
             if update_moves:
                 self.master.moves += 1
                 self.master.moves_label.configure(text=f"Movimientos: {self.master.moves}")
+                self.notify_moves_updated(self.master.moves)
 
             if not self.master.mezclando:
                 if self.master.check_win():
@@ -121,6 +126,7 @@ class Juego:
             else:
                 self.master.time_label.configure(text=f"Tiempo: {minutes}:{seconds:02d}")
                 self.master.after(1000, self.update_time)
+            self.notify_time_updated(elapsed_time)
 
     def shuffle_tiles(self):
         """Mezcla las fichas realizando movimientos válidos."""

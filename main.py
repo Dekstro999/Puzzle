@@ -1,30 +1,23 @@
 from Interface.Menu import Menu
 from Interface.Juego import Juego
 from History.Historial import Historial
-from Observable import Observable
-from GameObserver import GameObserver
-
 import customtkinter as ctk
 from customtkinter import CTkImage  
 import tkinter as tk
 from tkinter import messagebox
-import random
 import time
 import os
 from PIL import Image
 import threading
+from Observable import Observable
+from GameObserver import GameObserver
 
-class JuegoPuzzle(ctk.CTk, Observable):
+class JuegoPuzzle(ctk.CTk):
     def __init__(self):
-        ctk.CTk.__init__(self)
-        Observable.__init__(self)
-        
         super().__init__()
         self.title("Puzzle Deslizante")
         self.geometry("750x750")
         self.resizable(False, False)
-        # self.overrideredirect(True)
-
 
         self.player_name = None
         self.grid_size = 4
@@ -64,9 +57,6 @@ class JuegoPuzzle(ctk.CTk, Observable):
         self.historial = Historial(self)
 
         self.menu.create_menu_widgets()
-        
-        self.add_observer(GameObserver(self))
-        
 
     def space(self, n):
         self.space_label = ctk.CTkLabel(self, text="")
@@ -141,45 +131,8 @@ class JuegoPuzzle(ctk.CTk, Observable):
     def stop_loading_animation(self):
         """Detiene la animación de carga."""
         self.mezclando = False
-        self.loading_label.configure(image="")
+        self.loading_label.configure(image=None)
         self.sprite_index = 0
-        
-
-    def update_time(self):
-        if hasattr(self, 'time_label') and self.time_label.winfo_exists():
-            elapsed_time = int(time.time() - self.start_time)
-            minutes, seconds = divmod(elapsed_time, 60)
-            if self.paused_time:
-                self.time_label.configure(text=f"Tiempo: {minutes}:{seconds:02d} (Pausado)")
-            else:
-                self.time_label.configure(text=f"Tiempo: {minutes}:{seconds:02d}")
-                self.after(1000, self.update_time)
-            self.notify_observers('time_updated', elapsed_time)
-
-    def move_tile(self, row, col, update_moves=True):
-        if self.is_adjacent(row, col, *self.empty_tile):
-            empty_row, empty_col = self.empty_tile
-
-            self.text_vars[empty_row][empty_col].set(self.text_vars[row][col].get())
-            self.text_vars[row][col].set(" ")
-
-            self.update_tile_color(empty_row, empty_col)
-            self.update_tile_color(row, col)
-
-            self.empty_tile = (row, col)
-
-            if update_moves:
-                self.moves += 1
-                self.moves_label.configure(text=f"Movimientos: {self.moves}")
-                self.notify_observers('moves_updated', self.moves)
-
-            if not self.mezclando:
-                if self.check_win():
-                    self.historial.save_score()
-                    self.message_win()
-
-
-
 
 if __name__ == "__main__":
     app = JuegoPuzzle()
