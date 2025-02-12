@@ -109,7 +109,6 @@ class Juego(Observable):
 
             if update_moves:
                 self.master.moves += 1
-                self.master.moves_label.configure(text=f"Movimientos: {self.master.moves}")
                 self.notify_moves_updated(self.master.moves)
 
             if not self.master.mezclando:
@@ -120,11 +119,7 @@ class Juego(Observable):
     def update_time(self):
         if hasattr(self.master, 'time_label') and self.master.time_label.winfo_exists():
             elapsed_time = int(time.time() - self.master.start_time)
-            minutes, seconds = divmod(elapsed_time, 60)
-            if self.master.paused_time:
-                self.master.time_label.configure(text=f"Tiempo: {minutes}:{seconds:02d} (Pausado)")
-            else:
-                self.master.time_label.configure(text=f"Tiempo: {minutes}:{seconds:02d}")
+            if not self.master.paused_time:
                 self.master.after(1000, self.update_time)
             self.notify_time_updated(elapsed_time)
 
