@@ -1,11 +1,11 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from main import JuegoPuzzle
+from main import Game
 import threading
 
 @pytest.fixture
 def juego():
-    app = JuegoPuzzle()
+    app = Game()
     yield app
     app.destroy()
 

@@ -12,5 +12,4 @@ class Observable:
     
     def notify_observers(self, event, *args, **kwargs):
         for observer in self._observers:
-            if hasattr(observer, event):
-                getattr(observer, event)(*args, **kwargs)
+            observer.update(event, *args, **kwargs)

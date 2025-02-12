@@ -3,6 +3,12 @@ from observer import Observer
 class GameObserver(Observer):
     def __init__(self, juego_puzzle):
         self.juego_puzzle = juego_puzzle
+        
+    def update(self, event, *args, **kwargs):
+        if event == "time_updated":
+            self.on_time_updated(*args, **kwargs)
+        elif event == "moves_updated":
+            self.on_moves_updated(*args, **kwargs)
 
     def on_time_updated(self, elapsed_time):
         minutes, seconds = divmod(elapsed_time, 60)

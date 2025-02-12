@@ -10,7 +10,7 @@ import os
 from PIL import Image
 import threading
 
-class JuegoPuzzle(ctk.CTk):
+class Game(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Puzzle Deslizante")
@@ -134,5 +134,5 @@ class JuegoPuzzle(ctk.CTk):
         self.sprite_index = 0
 
 if __name__ == "__main__":
-    app = JuegoPuzzle()
+    app = Game()
     app.mainloop()
