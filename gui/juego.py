@@ -109,7 +109,7 @@ class Juego(Observable):
 
             if update_moves:
                 self.master.moves += 1
-                self.notify_moves_updated(self.master.moves)
+                self.notify_observers("on_moves_updated", self.master.moves)
 
             if not self.master.mezclando:
                 if self.master.check_win():
@@ -121,7 +121,7 @@ class Juego(Observable):
             elapsed_time = int(time.time() - self.master.start_time)
             if not self.master.paused_time:
                 self.master.after(1000, self.update_time)
-            self.notify_time_updated(elapsed_time)
+            self.notify_observers("on_time_updated", elapsed_time)
 
     def shuffle_tiles(self):
         """Mezcla las fichas realizando movimientos válidos."""
