@@ -1,6 +1,6 @@
-from Interface.menu import Menu
-from Interface.juego import Juego
-from History.Historial import Historial
+from gui.menu import Menu
+from gui.juego import Juego
+from history.historial import Historial
 import customtkinter as ctk
 from customtkinter import CTkImage
 import tkinter as tk
@@ -40,7 +40,7 @@ class JuegoPuzzle(ctk.CTk):
 
         self.sprites = []
         for i in range(8):
-            file_path = os.path.join(os.path.dirname(__file__), f"Image/Frame_loading_{i}.png")
+            file_path = os.path.join(os.path.dirname(__file__), f"assets/Frame_loading_{i}.png")
             if os.path.exists(file_path):
                 image = Image.open(file_path)
                 ctk_image = CTkImage(image, size=(80, 80))  
@@ -129,7 +129,8 @@ class JuegoPuzzle(ctk.CTk):
     def stop_loading_animation(self):
         """Detiene la animación de carga."""
         self.mezclando = False
-        self.loading_label.configure(image=None)
+        empty_image = CTkImage(Image.new('RGBA', (1, 1), (0, 0, 0, 0)), size=(1, 1))
+        self.loading_label.configure(image=empty_image)
         self.sprite_index = 0
 
 if __name__ == "__main__":

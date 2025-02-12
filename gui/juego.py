@@ -1,4 +1,4 @@
-from History.Historial import Historial
+from history.historial import Historial
 import customtkinter as ctk
 import tkinter as tk
 import random
