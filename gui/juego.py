@@ -4,7 +4,7 @@ import tkinter as tk
 import random
 import time
 from observable import Observable
-from game_observer import GameObserver
+from gui_observer import GameObserver
 
 class Juego(Observable):
     def __init__(self, master):
