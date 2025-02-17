@@ -4,14 +4,15 @@ import tkinter as tk
 import random
 import time
 from observable import Observable
-from gui_observer import GameObserver
+from game_observer import GameObserver
 
 class Juego(Observable):
     def __init__(self, master):
         super().__init__()
         self.master = master
         self.historial = Historial(master)
-        self.add_observer(GameObserver(self))
+        self.game_observer = GameObserver(self)
+        self.add_observer(self.game_observer)
 
     def create_main_menu(self):
         if not self.master.mezclando:
